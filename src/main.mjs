@@ -1,32 +1,26 @@
 import express from "express";
 import {createServer} from "node:http";
-import {fileURLToPath} from "node:url";
 
 import sqlite3 from "sqlite3";
 
 const app = express();
 const server = createServer(app);
 
-
-app.set('views', "../views");
+app.set("views", "../views");
 app.set("view engine", "ejs");
+app.use(express.urlencoded({extended: true}));
 
-const db = new sqlite3.Database(
-    "../db/todos.db",
-    sqlite3.OPEN_READWRITE,
-    (err) => {
-        if (err) {
-            console.error(err);
-        }
-        db.run(`CREATE TABLE IF NOT EXISTS todos (
+const db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE);
+
+db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            todo text, 
+            value text, 
             done boolean 
             )`);
-        //db.run(`INSERT INTO todos (todo, done) VALUES (1, true)`);
-
-    },
-);
+    db.run(`INSERT INTO todos (value, done) VALUES ("First Task", true)`);
+    db.run(`INSERT INTO todos (value, done) VALUES ("Second Task", false)`);
+});
 
 app.get("/", (req, res) => {
     db.all("SELECT * FROM todos", (err, rows) => {
@@ -35,22 +29,21 @@ app.get("/", (req, res) => {
             return;
         }
 
-     //   res.json({
-     //       message: "success",
-      //      data: rows,
-     //   });
-        //res = res.json();
-        res.render("index", {model:rows});
+        res.render("index", {model: rows});
     });
-
-    //res.sendFile(join(__dirname, "index.html"));
 });
 
-//db.close((err) => {
-//    if (err) {
-//        console.error(err);
-//    }
-//});
+app.post("/", (req, res) => {
+    const task = req.body["task"];
+    if (task !== "") {
+        db.run(`INSERT INTO todos (value, done) VALUES (?, false)`, task, (err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
+    res.redirect("/");
+});
 
 server.listen(3000, () => {
     console.log("server running at http://localhost:3000");

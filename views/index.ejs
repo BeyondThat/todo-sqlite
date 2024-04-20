@@ -9,14 +9,16 @@
 
 * {
      box-sizing: border-box;
+    margin:0;
+    padding:0;
 }
 
 body {
-    margin:0;
-    padding:0;
+
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #eceff4;
 }
 
 ul {
@@ -27,15 +29,16 @@ padding: 0;
 
 li {
     cursor: pointer;
-    padding: 1em 1em;
+    padding: 1em 20em 1em 1em;
+    background: #e3e7ef;
 }
 
 li:nth-child(odd) {
-  background: rgb(200,200,200);
+  background: #dbdfe7;
 }
 
 li:hover {
-  background: rgb(170,170,170);
+  background: #b2bbcb;
 }
 
 li.done {
@@ -44,11 +47,41 @@ li.done {
 
 .app {
     margin-top: 10em;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-input {
-
+.add {
+    display:flex;
+    align-items: center;
     margin-bottom: 5em;
+}
+
+
+input {
+    background: transparent;
+    border: none;
+    outline: 1px solid black;
+    padding: 0.5em 0.25em;
+    font-size: 1.0rem;
+}
+
+.add-btn {
+padding: 1em 2em;
+  border-radius: 0;
+  cursor:pointer;
+  border: 0;
+      background: rgb(87, 176, 255);
+      color: white;
+      margin-left: 1em;
+      text-shadow: 1px 1px 2px grey;
+      font-weight: bold;
+}
+
+.add-btn:hover {
+background: rgb(70, 160, 244);
 }
 
 
@@ -56,21 +89,21 @@ input {
     </head>
     <body>
         <div class="app">
-            <div class="add">
+            <form class="add"  action="/" method="post">
 
 
-                <input>
+                <input name="task">
 
                 </input>
-                <button>
+                <button class="add-btn" type="submit">
                     Add
                 </button>
-            </div>
+            </form>
 <ul>
 
   <% for (const task of model) { %>
     <li class="<%= task.done ? 'done' : "" %>">
-        <%= task.id %>
+        <%= task.value %>
     </li>
   <% } %>
 
