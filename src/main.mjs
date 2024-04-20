@@ -45,6 +45,21 @@ app.post("/", (req, res) => {
     res.redirect("/");
 });
 
+app.delete("/:id", (req, res) => {
+    const task = req.params.id;
+    db.run(
+        `DELETE FROM todos WHERE id = ?`,
+        task,
+
+        (err) => {
+            if (err) {
+                console.error(err);
+            }
+        },
+    );
+    res.end();
+});
+
 server.listen(3000, () => {
     console.log("server running at http://localhost:3000");
 });
