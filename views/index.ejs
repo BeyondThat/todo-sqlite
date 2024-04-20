@@ -128,7 +128,7 @@ background: rgb(200, 24, 24);
 <ul>
 
   <% for (const task of model) { %>
-    <li class="<%= task.done ? 'done' : "" %>">
+    <li class="<%= task.done ? 'done' : "" %>" onclick="setDone(<%= task.id %>)">
         <span><%= task.value %></span>
         <a href="#" class="delete-btn" onclick="deleteTodo(<%= task.id %>)">
                 Delete
@@ -141,6 +141,14 @@ background: rgb(200, 24, 24);
         <script>
     function deleteTodo(id){
         fetch(`/${id}`, {method: 'DELETE'}).then((res) => {
+            if(res.status === 200){
+                location.reload();
+            }
+        })
+    }
+
+    function setDone(id){
+        fetch(`/${id}`, {method: 'PATCH'}).then((res) => {
             if(res.status === 200){
                 location.reload();
             }

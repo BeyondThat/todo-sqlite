@@ -15,8 +15,8 @@ const db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE);
 db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            value text, 
-            done boolean 
+            value TEXT, 
+            done INTEGER
             )`);
     db.run(`INSERT INTO todos (value, done) VALUES ("First Task", true)`);
     db.run(`INSERT INTO todos (value, done) VALUES ("Second Task", false)`);
@@ -49,6 +49,21 @@ app.delete("/:id", (req, res) => {
     const task = req.params.id;
     db.run(
         `DELETE FROM todos WHERE id = ?`,
+        task,
+
+        (err) => {
+            if (err) {
+                console.error(err);
+            }
+        },
+    );
+    res.end();
+});
+
+app.patch("/:id", (req, res) => {
+    const task = req.params.id;
+    db.run(
+        `UPDATE todos SET done = CASE done WHEN 1 THEN 0 ELSE 1 END WHERE id = ?`,
         task,
 
         (err) => {
