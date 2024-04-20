@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>App</title>
+
+<style>
+
+* {
+     box-sizing: border-box;
+}
+
+body {
+    margin:0;
+    padding:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+list-style:none;
+margin:0;
+padding: 0;
+}
+
+li {
+    cursor: pointer;
+    padding: 1em 1em;
+}
+
+li:nth-child(odd) {
+  background: rgb(200,200,200);
+}
+
+li:hover {
+  background: rgb(170,170,170);
+}
+
+li.done {
+  text-decoration: line-through;
+}
+
+.app {
+    margin-top: 10em;
+}
+
+input {
+
+    margin-bottom: 5em;
+}
+
+
+</style>
+    </head>
+    <body>
+        <div class="app">
+            <div class="add">
+
+
+                <input>
+
+                </input>
+                <button>
+                    Add
+                </button>
+            </div>
+<ul>
+
+  <% for (const task of model) { %>
+    <li class="<%= task.done ? 'done' : "" %>">
+        <%= task.id %>
+    </li>
+  <% } %>
+
+</ul>
+        </div>
+    </body>
+</html>
