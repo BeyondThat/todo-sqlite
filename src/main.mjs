@@ -8,6 +8,7 @@ const server = createServer(app);
 
 app.set("views", "../views");
 app.set("view engine", "ejs");
+app.set('port', process.env.PORT || 3000);
 app.use(express.urlencoded({extended: true}));
 
 const db = new sqlite3.Database(":memory:", sqlite3.OPEN_READWRITE);
@@ -75,6 +76,7 @@ app.patch("/:id", (req, res) => {
     res.end();
 });
 
-server.listen(3000, () => {
+
+server.listen(app.get("port"), () => {
     console.log("server running at http://localhost:3000");
 });
