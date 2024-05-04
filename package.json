@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
     "start": "cd ./src && node ./main.mjs"
   },
   "keywords": [],
@@ -14,5 +14,9 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0",
+    "vitest": "^1.5.1"
   }
 }

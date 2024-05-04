@@ -1,159 +1,162 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>App</title>
 
-<style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App</title>
 
-* {
-     box-sizing: border-box;
-    margin:0;
-    padding:0;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
+        body {
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #eceff4;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eceff4;
+        }
 
-ul {
-list-style:none;
-margin:0;
-padding: 0;
-}
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-li {
-    cursor: pointer;
-    padding: 1em 2em;
-    background: #dbdfe7;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        li {
+            cursor: pointer;
+            padding: 1em 2em;
+            background: #dbdfe7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-li:nth-child(odd) {
-  background: #c0c8d9;
+        li:nth-child(odd) {
+            background: #c0c8d9;
 
-}
+        }
 
-li:hover {
-  background: #b2bbcb;
-}
+        li:hover {
+            background: #b2bbcb;
+        }
 
-li.done {
-    opacity: 0.3;
-}
+        li.done {
+            opacity: 0.3;
+        }
 
-li.done:hover {
-    opacity: 0.7;
-}
+        li.done:hover {
+            opacity: 0.7;
+        }
 
-li.done > span {
-  text-decoration: line-through;
-}
+        li.done>span {
+            text-decoration: line-through;
+        }
 
-.app {
-    margin-top: 10em;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .app {
+            margin-top: 10em;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.add {
-    display:flex;
-    align-items: center;
-    margin-bottom: 5em;
-}
-
-
-input {
-    background: transparent;
-    border: none;
-    outline: 1px solid black;
-    padding: 0.5em 0.25em;
-    font-size: 1.0rem;
-}
-
-.add-btn {
-padding: 1em 2em;
-  border-radius: 0;
-  cursor:pointer;
-  border: 0;
-  border-radius: 2px;
-      background: rgb(0, 176, 255);
-      color: white;
-      margin-left: 1em;
-      text-shadow: 1px 1px 2px grey;
-      font-weight: bold;
-}
-
-.add-btn:hover {
-background: rgb(7, 151, 216);
-}
-
-.delete-btn {
-background: rgb(255, 74, 74);
-text-decoration: none;
-color: white;
-margin-left: 14em;
-padding: 0.4em 0.7em;
-border-radius: 2px;
-letter-spacing: 1px;
-}
-
-.delete-btn:hover {
-background: rgb(200, 24, 24);
-}
-
-</style>
-    </head>
-    <body>
-        <div class="app">
-            <form class="add"  action="/" method="post">
+        .add {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5em;
+        }
 
 
-                <input name="task">
+        input {
+            background: transparent;
+            border: none;
+            outline: 1px solid black;
+            padding: 0.5em 0.25em;
+            font-size: 1.0rem;
+        }
 
-                </input>
-                <button class="add-btn" type="submit">
-                    Add
-                </button>
-            </form>
-<ul>
+        .add-btn {
+            padding: 1em 2em;
+            border-radius: 0;
+            cursor: pointer;
+            border: 0;
+            border-radius: 2px;
+            background: rgb(0, 176, 255);
+            color: white;
+            margin-left: 1em;
+            text-shadow: 1px 1px 2px grey;
+            font-weight: bold;
+        }
 
-  <% for (const task of model) { %>
-    <li class="<%= task.done ? 'done' : "" %>" onclick="setDone(<%= task.id %>)">
-        <span><%= task.value %></span>
-        <a href="#" class="delete-btn" onclick="deleteTodo(<%= task.id %>)">
-                Delete
-            </a>
-    </li>
-  <% } %>
+        .add-btn:hover {
+            background: rgb(7, 151, 216);
+        }
 
-</ul>
-        </div>
-        <script>
-    function deleteTodo(id){
-        fetch(`/${id}`, {method: 'DELETE'}).then((res) => {
-            if(res.status === 200){
-                location.reload();
-            }
-        })
-    }
+        .delete-btn {
+            background: rgb(255, 74, 74);
+            text-decoration: none;
+            color: white;
+            margin-left: 14em;
+            padding: 0.4em 0.7em;
+            border-radius: 2px;
+            letter-spacing: 1px;
+        }
 
-    function setDone(id){
-        fetch(`/${id}`, {method: 'PATCH'}).then((res) => {
-            if(res.status === 200){
-                location.reload();
-            }
-        })
-    }
-        </script>
-    </body>
+        .delete-btn:hover {
+            background: rgb(200, 24, 24);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <form class="add" action="/" method="post">
+
+
+            <input name="task">
+
+            </input>
+            <button class="add-btn" type="submit">
+                Add
+            </button>
+        </form>
+        <ul>
+
+            <% for (const task of model) { %>
+                <li class="<%= task.done ? 'done' : "" %>" onclick="setDone(<%= task.id %>)">
+                    <span>
+                        <%= task.value %>
+                    </span>
+                    <a href="#" class="delete-btn" onclick="deleteTodo(<%= task.id %>)">
+                        Delete
+                    </a>
+                </li>
+                <% } %>
+
+        </ul>
+    </div>
+    <script>
+        function deleteTodo(id) {
+            fetch(`/${id}`, {method: 'DELETE'}).then((res) => {
+                if (res.status === 200) {
+                    location.reload();
+                }
+            })
+        }
+
+        function setDone(id) {
+            fetch(`/${id}`, {method: 'PATCH'}).then((res) => {
+                if (res.status === 200) {
+                    location.reload();
+                }
+            })
+        }
+    </script>
+</body>
+
 </html>
